@@ -6,6 +6,7 @@ import os
 import argparse
 import sys
 import json
+import random
 
 # adapted from http://stackoverflow.com/questions/20716842/python-download-images-from-google-image-search
 
@@ -14,14 +15,21 @@ def get_soup(url,header):
 
 def main(args):
 	parser = argparse.ArgumentParser(description='Scrape Google images')
-	parser.add_argument('-s', '--search', default='bananas', type=str, help='search term')
-	parser.add_argument('-n', '--num_images', default=10, type=int, help='num images to save')
+	parser.add_argument('-s', '--search', default='desktop background 1080p', type=str, help='search term')
+	parser.add_argument('-n', '--num_images', default=1, type=int, help='num images to save')
 	parser.add_argument('-d', '--directory', default=os.path.join(os.environ['HOME'], 'Downloads'), type=str, help='save directory')
 	args = parser.parse_args()
-	query = args.search#raw_input(args.search)
+	query = args.search
 	max_images = args.num_images
 	save_directory = args.directory
 	image_type="Action"
+	
+	# Clean up query
+	if query != 'desktop background 1080p':
+		# If a search term specific like 'Space' or 'Cats', append
+		# desktop background description to the query for wallpapers
+		query += ' desktop background 1080p' 
+
 	query= query.split()
 	query='+'.join(query)
 	url="https://www.google.co.in/search?q="+query+"&source=lnms&tbm=isch"
@@ -31,7 +39,13 @@ def main(args):
 	for a in soup.find_all("div",{"class":"rg_meta"}):
 	    link , Type =json.loads(a.text)["ou"]  ,json.loads(a.text)["ity"]
 	    ActualImages.append((link,Type))
-	for i , (img , Type) in enumerate( ActualImages[0:max_images]):
+	
+	# Get random image from search results so its different every time
+	rand_image_num = random.randint(0, 99)
+	#for i , (img , Type) in enumerate( ActualImages[0:max_images]):
+	# Kept as this syntax so I didn't have to change any code, ignore the loop
+	# despite it being for a single image
+	for i , (img , Type) in enumerate( ActualImages[rand_image_num:rand_image_num+1]):
 	    try:
 	        req = urllib.request.Request(img, headers=header)
 	        raw_img = urllib.request.urlopen(req).read()
