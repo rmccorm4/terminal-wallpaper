@@ -13,7 +13,8 @@ import random
 def get_soup(url,header):
     return BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url,headers=header)),'html.parser')
 
-def main(args):
+'''
+def scrape(args):
 	parser = argparse.ArgumentParser(description='Scrape Google images')
 	parser.add_argument('-s', '--search', default='desktop background 1080p', type=str, help='search term')
 	parser.add_argument('-n', '--num_images', default=1, type=int, help='num images to save')
@@ -22,6 +23,9 @@ def main(args):
 	query = args.search
 	max_images = args.num_images
 	save_directory = args.directory
+'''
+def scrape(query, save_directory):
+
 	image_type="Action"
 	
 	# Clean up query
@@ -62,7 +66,7 @@ def main(args):
 if __name__ == '__main__':
     from sys import argv
     try:
-        main(argv)
+        scrape(argv)
     except KeyboardInterrupt:
         pass
     sys.exit()
