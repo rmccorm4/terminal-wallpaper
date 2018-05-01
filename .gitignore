@@ -1,2 +1,4 @@
 # Wallpapers directory created by user
 wallpapers/*
+# Cache
+__pycache__
