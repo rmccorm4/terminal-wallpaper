@@ -1,5 +1,7 @@
 import os
+import sys
 import shutil
+import logging
 import scraper
 import argparse
 import subprocess
