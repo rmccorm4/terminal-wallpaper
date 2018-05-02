@@ -31,6 +31,7 @@ def xfconf(path, img):
 # Taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
 def set_mac_wallpaper(img):
 	"""Set the wallpaper on macOS."""
+	HOME = os.getenv("HOME", os.getenv("USERPROFILE"))
 	db_file = "Library/Application Support/Dock/desktoppicture.db"
 	db_path = os.path.join(HOME, db_file)
 	subprocess.call(["sqlite3", db_path, "update data set value = '%s'" % img])
