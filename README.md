@@ -13,12 +13,14 @@ pip3 install -r requirements.txt
 ```
 
 ## Execution
+### Random Wallpaper
 To get a random wallpaper from your terminal, run:
 
 ```
 python3 wallpaper.py
 ```
 
+### Search for Specific Wallpaper
 To get a wallpaper based on a specified search term, run:
 
 ```
@@ -30,6 +32,8 @@ or
 ```
 python3 wallpaper.py --search <search_term>
 ```
+
+### Choosing Which Search Result
 
 By default, the script will choose one of the first 30 results from
 the image search. To manually choose which search result to make your
