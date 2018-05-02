@@ -33,6 +33,8 @@ or
 python3 wallpaper.py --search <search_term>
 ```
 
+![Alt Text](images/search-term.gif)
+
 ### Choosing Which Search Result
 
 By default, the script will choose one of the first 30 results from
