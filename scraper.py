@@ -25,7 +25,7 @@ def scrape(args):
 	save_directory = args.directory
 '''
 
-def scrape(query, save_directory):
+def scrape(query, save_directory, result):
 
 	image_type="Action"
 	
@@ -50,11 +50,11 @@ def scrape(query, save_directory):
 	
 	# Get random image from search results so its different every time
 	# Only looking at first 30 for best results with some diversity still
-	rand_image_num = random.randint(0, 30)
+	#rand_image_num = random.randint(0, 0)
 	#for i , (img , Type) in enumerate( ActualImages[0:max_images]):
 	# Kept as this syntax so I didn't have to change any code, ignore the loop
 	# despite it being for a single image
-	for i , (img , Type) in enumerate( ActualImages[rand_image_num:rand_image_num+1]):
+	for i , (img , Type) in enumerate( ActualImages[result:result+1]):
 		try:
 			req = urllib.request.Request(img, headers=header)
 			raw_img = urllib.request.urlopen(req).read()
@@ -66,12 +66,12 @@ def scrape(query, save_directory):
 				f = open(os.path.join(save_directory, retval), 'wb')
 			f.write(raw_img)
 			f.close()
+			# Return filename created
+			return retval
 		except Exception as e:
 			print("could not load : " + img)
 			print(e)
-	
-	# Return filename created
-	return retval
+			return ''	
 
 if __name__ == '__main__':
 	from sys import argv
