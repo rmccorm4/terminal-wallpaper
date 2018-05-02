@@ -1,32 +1,20 @@
-from bs4 import BeautifulSoup
-import requests
 import re
-import urllib.request
 import os
-import argparse
 import sys
 import json
 import random
+import requests
+import argparse
+import urllib.request
+from bs4 import BeautifulSoup
 
-# adapted from http://stackoverflow.com/questions/20716842/python-download-images-from-google-image-search
+# Modified/Adapted from http://stackoverflow.com/questions/20716842/python-download-images-from-google-image-search
+# Also converted library functions from Python2 -> Python3
 
 def get_soup(url,header):
 	return BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url,headers=header)),'html.parser')
 
-'''
-def scrape(args):
-	parser = argparse.ArgumentParser(description='Scrape Google images')
-	parser.add_argument('-s', '--search', default='desktop background 1080p', type=str, help='search term')
-	parser.add_argument('-n', '--num_images', default=1, type=int, help='num images to save')
-	parser.add_argument('-d', '--directory', default=os.path.join(os.environ['HOME'], 'Downloads'), type=str, help='save directory')
-	args = parser.parse_args()
-	query = args.search
-	max_images = args.num_images
-	save_directory = args.directory
-'''
-
 def scrape(query, save_directory, result, fun_flag):
-
 	image_type="Action"
 	
 	search_term = query[:]
