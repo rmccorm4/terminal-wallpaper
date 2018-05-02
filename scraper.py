@@ -19,7 +19,7 @@ def scrape(query, save_directory, result, fun_flag):
 	
 	search_term = query[:]
 	# Clean up query
-	if query != 'desktop background 1080p' and fun_flag > 0:
+	if query != 'desktop background 1080p' and fun_flag:
 		pass
 	elif query != 'desktop background 1080p':
 		# If a search term specific like 'Space' or 'Cats', append

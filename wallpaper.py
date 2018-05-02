@@ -140,7 +140,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Scrape Google images')
 	parser.add_argument('-s', '--search', default='desktop background 1080p', type=str, help='search term')
 	parser.add_argument('-n', '--number', default=random.randint(0, 30), type=int, help='n-th result to choose as background')
-	parser.add_argument('-f', '--fun', default=0, type=int, help='option to remove the "desktop background 1080p" from search term for more specific results but less quality')
+	parser.add_argument('-f', '--fun', action='store_true', help='option to remove the "desktop background 1080p" from search term for more specific results but less quality')
 	
 	args = parser.parse_args()
 	query = args.search
