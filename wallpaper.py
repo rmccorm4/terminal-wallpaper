@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import random
 import logging
 import scraper
 import argparse
@@ -107,16 +108,18 @@ def set_desktop_wallpaper(desktop, img):
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Scrape Google images')
 	parser.add_argument('-s', '--search', default='desktop background 1080p', type=str, help='search term')
+	parser.add_argument('-n', '--number', default=random.randint(0, 30), type=int, help='n-th result to choose as background')
 	
 	args = parser.parse_args()
 	query = args.search
+	result = args.number
 	wallpaper_dir = "wallpapers"
 
 	if not os.path.exists(wallpaper_dir):
 		os.makedirs(wallpaper_dir)
 
 	# Get filename created from scraper based on query
-	filename = scraper.scrape(query, wallpaper_dir)
+	filename = scraper.scrape(query, wallpaper_dir, result)
 	# Get desktop environment if it exists
 	desktop = get_desktop_env()
 	# Set wallpaper to scraped image
