@@ -141,22 +141,30 @@ if __name__ == '__main__':
 	parser.add_argument('-s', '--search', default='desktop background 1080p', type=str, help='search term')
 	parser.add_argument('-n', '--number', default=random.randint(0, 30), type=int, help='n-th result to choose as background')
 	parser.add_argument('-f', '--fun', action='store_true', help='option to remove the "desktop background 1080p" from search term for more specific results but less quality')
+	parser.add_argument('-i', '--image', default='', type=str, help='image to set your wallpaper as')
 	
 	args = parser.parse_args()
 	query = args.search
 	result = args.number
 	fun = args.fun
+	image = args.image
 	wallpaper_dir = "wallpapers"
 
 	if not os.path.exists(wallpaper_dir):
 		os.makedirs(wallpaper_dir)
 
-	# Get filename created from scraper based on query
-	filename = scraper.scrape(query, wallpaper_dir, result, fun)
-	# Set wallpaper to scraped image
-	this_dir = os.getcwd()
-	img_path = os.path.join(this_dir, wallpaper_dir, filename)
-	print('Desktop Background saved to:', img_path)
+	if image == '':
+		print('Scraping a Desktop Background from Google Images...')
+		# Get filename created from scraper based on query
+		filename = scraper.scrape(query, wallpaper_dir, result, fun)
+		# Set wallpaper to scraped image
+		img_path = os.path.join(os.getgwd(), wallpaper_dir, filename)
+		print('Desktop Background saved to:', img_path)
+	# If image already specified
+	else:
+		filename = image
+		img_path = os.path.join(os.getcwd(), filename)
+		print('Using image already saved in:', img_path)
 
 	# Get operating system name from system
 	operating_system = platform.uname()[0]
