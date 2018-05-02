@@ -62,7 +62,13 @@ For those who are trying to find funny wallpapers that might not
 necessarily be 1080p, there is a '-f' or '--fun' flag to do so. Run:
 
 ```
-python3 wallpaper.py --search <search_term> -f 1
+python3 wallpaper.py --search <search_term> -f
+```
+
+or
+
+```
+python3 wallpaper.py --search <search_term> --fun
 ```
 
 ![Alt Text](images/fun-flag.gif?raw=true "Fun Flag Example")
