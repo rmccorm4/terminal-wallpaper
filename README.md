@@ -20,6 +20,8 @@ To get a random wallpaper from your terminal, run:
 python3 wallpaper.py
 ```
 
+![Alt Text](images/random.gif?raw=true "Random Example")
+
 ### Search for Specific Wallpaper
 To get a wallpaper based on a specified search term, run:
 
@@ -51,3 +53,16 @@ To get the first result, run:
 ```
 python3 wallpaper.py --search <search_term> -n 0
 ```
+
+![Alt Text](images/result-number.gif?raw=true "Result Number Example")
+
+### Fun Flag
+
+For those who are trying to find funny wallpapers that might not
+necessarily be 1080p, there is a '-f' or '--fun' flag to do so. Run:
+
+```
+python3 wallpaper.py --search <search_term> -f 1
+```
+
+![Alt Text](images/fun-flag.gif?raw=true "Fun Flag Example")
