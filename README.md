@@ -33,7 +33,7 @@ or
 python3 wallpaper.py --search <search_term>
 ```
 
-![Alt Text](images/search-term.gif)
+![Alt Text](images/search-term.gif?raw=true "Search Term Example")
 
 ### Choosing Which Search Result
 
