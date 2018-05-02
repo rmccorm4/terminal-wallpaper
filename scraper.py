@@ -25,13 +25,15 @@ def scrape(args):
 	save_directory = args.directory
 '''
 
-def scrape(query, save_directory, result):
+def scrape(query, save_directory, result, fun_flag):
 
 	image_type="Action"
 	
 	search_term = query[:]
 	# Clean up query
-	if query != 'desktop background 1080p':
+	if query != 'desktop background 1080p' and fun_flag > 0:
+		pass
+	elif query != 'desktop background 1080p':
 		# If a search term specific like 'Space' or 'Cats', append
 		# desktop background description to the query for wallpapers
 		query += ' desktop background 1080p' 
