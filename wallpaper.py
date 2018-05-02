@@ -4,11 +4,17 @@ import shutil
 import random
 import logging
 import scraper
+import platform
 import argparse
 import subprocess
 from sys import argv
 
-# disown() taken from https://github.com/dylanaraps/pywal/blob/master/pywal/util.py
+'''
+Most of these functions were taken/slightly modified from 'Pywal' by Dylanaraps,
+some of my own touches added here and there, but its not much.
+'''
+
+# Taken from https://github.com/dylanaraps/pywal/blob/master/pywal/util.py
 def disown(cmd):
 	"""Call a system command in the background,
 	   disown it and hide it's output."""
@@ -16,13 +22,37 @@ def disown(cmd):
 					 stdout=subprocess.DEVNULL,
 					 stderr=subprocess.DEVNULL)
 
-# xconf() taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
+# Taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
 def xfconf(path, img):
 	"""Call xfconf to set the wallpaper on XFCE."""
 	disown(["xfconf-query", "--channel", "xfce4-desktop",
 				 "--property", path, "--set", img])
 
-# set_wm_wallpaper() taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
+# Taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
+def set_mac_wallpaper(img):
+	"""Set the wallpaper on macOS."""
+	db_file = "Library/Application Support/Dock/desktoppicture.db"
+	db_path = os.path.join(HOME, db_file)
+	subprocess.call(["sqlite3", db_path, "update data set value = '%s'" % img])
+
+	# Kill the dock to fix issues with cached wallpapers.
+	# macOS caches wallpapers and if a wallpaper is set that shares
+	# the filename with a cached wallpaper, the cached wallpaper is
+	# used instead.
+	subprocess.call(["killall", "Dock"])
+
+# Taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
+def set_win_wallpaper(img):
+	"""Set the wallpaper on Windows."""
+	# There's a different command depending on the architecture
+	# of Windows. We check the PROGRAMFILES envar since using
+	# platform is unreliable.
+	if "x86" in os.environ["PROGRAMFILES"]:
+		ctypes.windll.user32.SystemParametersInfoW(20, 0, img, 3)
+	else:
+		ctypes.windll.user32.SystemParametersInfoA(20, 0, img, 3)
+
+# Taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
 def set_wm_wallpaper(img):
 	"""Set the wallpaper for non desktop environments."""
 	if shutil.which("feh"):
@@ -48,7 +78,7 @@ def set_wm_wallpaper(img):
 		return
 
 
-# get_desktop_env() taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
+# Taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
 def get_desktop_env():
 	"""Identify the current running desktop environment."""
 	desktop = os.environ.get("XDG_CURRENT_DESKTOP")
@@ -73,7 +103,7 @@ def get_desktop_env():
 
 	return None
 
-# set_desktop_wallpaper() taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
+# Taken from https://github.com/dylanaraps/pywal/blob/master/pywal/wallpaper.py
 def set_desktop_wallpaper(desktop, img):
 	"""Set the wallpaper for the desktop environment."""
 	desktop = str(desktop).lower()
@@ -122,10 +152,22 @@ if __name__ == '__main__':
 
 	# Get filename created from scraper based on query
 	filename = scraper.scrape(query, wallpaper_dir, result, fun)
-	# Get desktop environment if it exists
-	desktop = get_desktop_env()
 	# Set wallpaper to scraped image
 	this_dir = os.getcwd()
 	img_path = os.path.join(this_dir, wallpaper_dir, filename)
-	print(img_path)
-	set_desktop_wallpaper(desktop, img_path)
+	print('Desktop Background saved to:', img_path)
+
+	# Get operating system name from system
+	operating_system = platform.uname()[0]
+	print('Operating System:', operating_system)
+
+	if operating_system == 'Darwin':
+		set_mac_wallpaper(img_path)
+
+	elif operating_system == 'Windows':
+		set_win_wallpaper(img_path)
+
+	else:
+		# Get desktop environment if it exists
+		desktop = get_desktop_env()
+		set_desktop_wallpaper(desktop, img_path)
