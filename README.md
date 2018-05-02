@@ -25,8 +25,23 @@ To get a wallpaper based on a specified search term, run:
 python3 wallpaper.py -s <search_term>
 ```
 
-OR
+or
 
 ```
 python3 wallpaper.py --search <search_term>
+```
+
+By default, the script will choose one of the first 30 results from
+the image search. To manually choose which search result to make your
+background, such as always choosing the 1st result to get the most
+relevant result, run:
+
+```
+python3 wallpaper.py --search <search_term> -n <result_number>
+```
+
+To get the first result, run:
+
+```
+python3 wallpaper.py --search <search_term> -n 0
 ```
