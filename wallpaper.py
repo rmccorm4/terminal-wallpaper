@@ -158,7 +158,7 @@ if __name__ == '__main__':
 		# Get filename created from scraper based on query
 		filename = scraper.scrape(query, wallpaper_dir, result, fun)
 		# Set wallpaper to scraped image
-		img_path = os.path.join(os.getgwd(), wallpaper_dir, filename)
+		img_path = os.path.join(os.getcwd(), wallpaper_dir, filename)
 		print('Desktop Background saved to:', img_path)
 	# If image already specified
 	else:
