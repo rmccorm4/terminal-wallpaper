@@ -31,6 +31,8 @@ def scrape(query, save_directory, result, fun_flag):
 	query= query.split()
 	query='+'.join(query)
 	url="https://www.google.co.in/search?q="+query+"&source=lnms&tbm=isch"
+	print('Search Query:', query)
+	print('Image URL:', url)
 	header={'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36"}
 	soup = get_soup(url,header)
 	ActualImages=[]# contains the link for Large original images, type of  image
@@ -59,9 +61,11 @@ def scrape(query, save_directory, result, fun_flag):
 			# Return filename created
 			return retval
 		except Exception as e:
-			print("could not load : " + img)
-			print(e)
-			return ''	
+			print("Could not load : " + img)
+			print('---\nPlease try again.')
+			#print(e)
+			#return ''	
+			sys.exit(1)
 
 if __name__ == '__main__':
 	from sys import argv

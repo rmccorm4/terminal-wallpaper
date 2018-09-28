@@ -108,6 +108,7 @@ def get_desktop_env():
 def set_desktop_wallpaper(desktop, img):
 	"""Set the wallpaper for the desktop environment."""
 	desktop = str(desktop).lower()
+	print('Desktop Environment:', desktop)
 
 	if "xfce" in desktop or "xubuntu" in desktop:
 		# XFCE requires two commands since they differ between versions.
@@ -121,7 +122,7 @@ def set_desktop_wallpaper(desktop, img):
 					 #"picture-uri", "file://" + urllib.parse.quote(img)])
 
 	elif "gnome" in desktop:
-		disown(["gsettings", "set",
+		disown(["/usr/bin/gsettings", "set",
 					 "org.gnome.desktop.background",
 					 "picture-uri", "file://" + img])
 					 #"picture-uri", "file://" + urllib.parse.quote(img)])
